@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>node and socket.io</title>
+
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/public/stylesheets/style.css">
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+ <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  
+</head>
+<body>
+<form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+    <ul style="border:1px solid black; overflow:scroll;height: 100px; width:300px;" id="messages"></ul>
+<script>
+  var socket = io();
+  $('form').submit(function(){
+    socket.emit('chat message', $('#m').val());
+    $('#m').val('');
+    return false;
+  });
+
+  socket.on('reply message', function(msg){
+    $('#messages').append($('<li>').text("You send:"+msg.value));
+    console.log(msg);
+  });
+
+</script>
+</body>
+</html>
